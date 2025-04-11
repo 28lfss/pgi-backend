@@ -6,6 +6,8 @@ import com.lfssa.pgi.domain.repository.UserRepository;
 import com.lfssa.pgi.domain.model.User;
 import com.lfssa.pgi.dto.UserRequest;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -16,5 +18,9 @@ public class UserService {
         newUser.setUserId(user.userId);
         newUser.setUsername(user.username);
         userRepository.createUser(newUser);
+    }
+
+    public Optional<User> findUserById(UserRequest request) {
+        return userRepository.findUserById(request.id);
     }
 }

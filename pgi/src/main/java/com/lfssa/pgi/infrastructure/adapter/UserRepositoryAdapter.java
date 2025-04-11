@@ -6,6 +6,8 @@ import com.lfssa.pgi.domain.repository.UserRepository;
 import com.lfssa.pgi.infrastructure.mongo.MongoUserRepository;
 import com.lfssa.pgi.domain.model.User;
 
+import java.util.Optional;
+
 @Component
 public class UserRepositoryAdapter implements UserRepository {
 
@@ -15,5 +17,10 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public void createUser(User user) {
         mongoUserRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findUserById(String id) {
+        return mongoUserRepository.findById(id);
     }
 }
