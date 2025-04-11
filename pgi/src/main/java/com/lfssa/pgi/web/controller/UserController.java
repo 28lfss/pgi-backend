@@ -24,4 +24,10 @@ public class UserController {
     public Optional<User> findUserById(@RequestBody UserRequest request) {
         return userService.findUserById(request);
     }
+
+    @DeleteMapping
+    public String deleteUserById(@RequestBody UserRequest request) {
+        userService.deleteUserById(request);
+        return "User deleted";
+    }
 }

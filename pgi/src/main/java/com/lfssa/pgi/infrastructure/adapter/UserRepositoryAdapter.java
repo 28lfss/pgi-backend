@@ -23,4 +23,9 @@ public class UserRepositoryAdapter implements UserRepository {
     public Optional<User> findUserById(String id) {
         return mongoUserRepository.findById(id);
     }
+
+    @Override
+    public void deleteUserById(String id) {
+        mongoUserRepository.deleteById(id);
+    }
 }
