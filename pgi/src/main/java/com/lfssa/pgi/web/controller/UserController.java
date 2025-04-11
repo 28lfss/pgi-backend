@@ -6,6 +6,7 @@ import com.lfssa.pgi.application.service.UserService;
 import com.lfssa.pgi.domain.model.User;
 import com.lfssa.pgi.dto.UserRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,5 +30,10 @@ public class UserController {
     public String deleteUserById(@RequestBody UserRequest request) {
         userService.deleteUserById(request);
         return "User deleted";
+    }
+
+    @GetMapping("/all")
+    public List<User> findAllUsers() {
+        return userService.findAllUsers();
     }
 }
