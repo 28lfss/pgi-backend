@@ -1,18 +1,18 @@
 package com.lfssa.pgi.dto;
 
-import jakarta.validation.constraints.Email;
+import com.lfssa.pgi.domain.model.User.AccessLevel;
+
+import java.util.UUID;
 
 public class UserRequest {
-    public String userId;
-
-    @Email
-    public String email;
-
     public String username;
-
-    public String password;
-
+    public String email;
+    public String hashPassword;
+    public String sessionToken;
+    public long loginTimestamp;
+    public AccessLevel accessLevel;
+    public boolean isActive;
     public String device;
 
-    public String id;
+    public UUID id; //TODO: remove this variable later
 }
