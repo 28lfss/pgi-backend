@@ -1,37 +1,38 @@
 package com.lfssa.pgi.infrastructure.adapter;
 
+import com.lfssa.pgi.infrastructure.postgresql.PostgresqlUserRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.repository.UserRepository;
-import com.lfssa.pgi.infrastructure.mongo.MongoUserRepository;
 import com.lfssa.pgi.domain.model.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class UserRepositoryAdapter implements UserRepository {
 
     @Autowired
-    private MongoUserRepository mongoUserRepository;
+    PostgresqlUserRepository postgresqlUserRepository;
 
     @Override
     public void createUser(User user) {
-        mongoUserRepository.save(user);
+        postgresqlUserRepository.save(user);
     }
 
     @Override
-    public Optional<User> findUserById(String id) {
-        return mongoUserRepository.findById(id);
+    public Optional<User> findUserById(UUID id) {
+        return postgresqlUserRepository.findById(id);
     }
 
     @Override
-    public void deleteUserById(String id) {
-        mongoUserRepository.deleteById(id);
+    public void deleteUserById(UUID id) {
+        postgresqlUserRepository.deleteById(id);
     }
 
     @Override
     public List<User> findAllUsers() {
-        return mongoUserRepository.findAll();
+        return postgresqlUserRepository.findAll();
     }
 }

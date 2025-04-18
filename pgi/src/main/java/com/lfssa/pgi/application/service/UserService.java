@@ -17,10 +17,14 @@ public class UserService {
     public void createUser(UserRequest user) {
         User newUser = new User();
 
-        newUser.setUserId(user.userId);
         newUser.setUsername(user.username);
         newUser.setEmail(user.email);
-        newUser.setHashedPassword(user.password);
+        newUser.setHashPassword(user.hashPassword);
+        newUser.setSessionToken(user.sessionToken);
+        newUser.setLoginTimestamp(user.loginTimestamp);
+        newUser.setAccessLevel(User.AccessLevel.ADMIN); //TODO: set access level according to request
+        newUser.setActive(user.isActive);
+        newUser.setDevice(user.device);
 
         userRepository.createUser(newUser);
     }
