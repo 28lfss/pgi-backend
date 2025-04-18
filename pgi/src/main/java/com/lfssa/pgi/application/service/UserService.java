@@ -14,27 +14,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(UserRequest user) {
+    public void createUser(UserRequest request) {
         User newUser = new User();
 
-        newUser.setUsername(user.username);
-        newUser.setEmail(user.email);
-        newUser.setHashPassword(user.hashPassword);
-        newUser.setSessionToken(user.sessionToken);
-        newUser.setLoginTimestamp(user.loginTimestamp);
-        newUser.setAccessLevel(User.AccessLevel.ADMIN); //TODO: set access level according to request
-        newUser.setActive(user.isActive);
-        newUser.setDevice(user.device);
+        newUser.setUsername(request.username);
+        newUser.setEmail(request.email);
+        newUser.setHashPassword(request.password);
+        newUser.setAccessLevel(User.AccessLevel.COLLAB);
 
         userRepository.createUser(newUser);
     }
 
     public Optional<User> findUserById(UserRequest request) {
-        return userRepository.findUserById(request.id);
-    }
-
-    public void deleteUserById(UserRequest request) {
-        userRepository.deleteUserById(request.id);
+        return userRepository.findUserById(request.userId);
     }
 
     public List<User> findAllUsers() {

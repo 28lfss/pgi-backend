@@ -26,12 +26,6 @@ public class UserController {
         return userService.findUserById(request);
     }
 
-    @DeleteMapping
-    public String deleteUserById(@RequestBody UserRequest request) {
-        userService.deleteUserById(request);
-        return "User deleted";
-    }
-
     @GetMapping("/all")
     public List<User> findAllUsers() {
         return userService.findAllUsers();

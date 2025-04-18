@@ -27,11 +27,6 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public void deleteUserById(UUID id) {
-        postgresqlUserRepository.deleteById(id);
-    }
-
-    @Override
     public List<User> findAllUsers() {
         return postgresqlUserRepository.findAll();
     }
