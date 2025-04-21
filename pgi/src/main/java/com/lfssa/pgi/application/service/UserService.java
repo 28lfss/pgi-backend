@@ -32,4 +32,8 @@ public class UserService {
     public List<User> findAllUsers() {
         return userRepository.findAllUsers();
     }
+
+    public Optional<User> findUserByEmail(UserRequest request) {
+        return userRepository.findUserByEmail(request.email);
+    }
 }

@@ -30,4 +30,9 @@ public class UserRepositoryAdapter implements UserRepository {
     public List<User> findAllUsers() {
         return postgresqlUserRepository.findAll();
     }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return postgresqlUserRepository.findUserByEmail(email);
+    }
 }
