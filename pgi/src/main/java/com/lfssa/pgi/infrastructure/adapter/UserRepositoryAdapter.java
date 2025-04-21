@@ -32,6 +32,11 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
+    public Boolean existsUserByEmail(String email) {
+        return postgresqlUserRepository.existsUserByEmail(email);
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) {
         return postgresqlUserRepository.findUserByEmail(email);
     }

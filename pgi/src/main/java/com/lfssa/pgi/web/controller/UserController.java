@@ -31,6 +31,11 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+    @GetMapping("/login")
+    public Boolean existsUserByEmail(@RequestBody UserRequest request) {
+        return userService.existsUserByEmail(request);
+    };
+
     @GetMapping("/email")
     public Optional<User> findUserByEmail(@RequestBody UserRequest request) {
         return userService.findUserByEmail(request);

@@ -7,5 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PostgresqlUserRepository extends JpaRepository<User, UUID> {
+    Boolean existsUserByEmail(String email);
+
     Optional<User> findUserByEmail(String email);
 }

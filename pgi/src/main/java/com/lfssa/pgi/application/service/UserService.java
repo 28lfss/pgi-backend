@@ -33,6 +33,10 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
+    public Boolean existsUserByEmail(UserRequest request) {
+        return userRepository.existsUserByEmail(request.email);
+    }
+
     public Optional<User> findUserByEmail(UserRequest request) {
         return userRepository.findUserByEmail(request.email);
     }
