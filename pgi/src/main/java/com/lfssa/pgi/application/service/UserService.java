@@ -1,5 +1,6 @@
 package com.lfssa.pgi.application.service;
 
+import com.lfssa.pgi.dto.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.repository.UserRepository;
@@ -7,7 +8,9 @@ import com.lfssa.pgi.domain.model.User;
 import com.lfssa.pgi.dto.UserRequest;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,19 +28,23 @@ public class UserService {
         userRepository.createUser(newUser);
     }
 
-    public Optional<User> findUserById(UserRequest request) {
-        return userRepository.findUserById(request.userId);
+    public Optional<UserResponse> findUserById(UserRequest request) {
+        return userRepository.findUserById(request.userId).map(UserResponse::from);
     }
 
-    public List<User> findAllUsers() {
-        return userRepository.findAllUsers();
+    public List<UserResponse> findAllUsers() {
+        return userRepository.findAllUsers().stream().map(UserResponse::from).collect(Collectors.toList());
     }
 
-    public Boolean existsUserByEmail(UserRequest request) {
-        return userRepository.existsUserByEmail(request.email);
+    public Optional<UserResponse> findUserByEmail(UserRequest request) {
+        return userRepository.findUserByEmail(request.email).map(UserResponse::from);
     }
 
-    public Optional<User> findUserByEmail(UserRequest request) {
-        return userRepository.findUserByEmail(request.email);
+    public Boolean login(UserRequest request) {
+        if (userRepository.existsUserByEmail(request.email)) {
+            Optional<User> user = userRepository.findUserByEmail(request.email);
+            return Objects.equals(user.get().getHashPassword(), request.password);
+        }
+        return false;
     }
 }

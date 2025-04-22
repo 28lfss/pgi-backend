@@ -1,8 +1,11 @@
 package com.lfssa.pgi.dto;
 
 import com.lfssa.pgi.domain.model.User;
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 public class UserResponse {
     private UUID user_id;
     private String username;
@@ -10,6 +13,20 @@ public class UserResponse {
     private String sessionToken;
     private long loginTimestamp;
     private User.AccessLevel accessLevel;
-    private boolean isActive;
+    private boolean active;
     private String device;
+
+    // User mapper that convert to Response
+    public static UserResponse from(User user) {
+        UserResponse response = new UserResponse();
+        response.setUser_id(user.getUser_id());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setSessionToken(user.getSessionToken());
+        response.setLoginTimestamp(user.getLoginTimestamp());
+        response.setAccessLevel(user.getAccessLevel());
+        response.setActive(user.isActive());
+        response.setDevice(user.getDevice());
+        return response;
+    }
 }

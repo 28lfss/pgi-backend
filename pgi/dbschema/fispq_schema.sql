@@ -14,7 +14,7 @@ CREATE TABLE users (
     session_token VARCHAR(256),
     login_timestamp BIGINT,
     access_level access_level DEFAULT 'COLLAB',
-    is_active BOOLEAN DEFAULT TRUE,
+    active BOOLEAN DEFAULT TRUE,
     device TEXT
 );
 
