@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(UserRequest request) {
+    public String createUser(UserRequest request) {
         User newUser = new User();
 
         newUser.setUsername(request.username);
@@ -26,6 +26,7 @@ public class UserService {
         newUser.setAccessLevel(User.AccessLevel.COLLAB);
 
         userRepository.createUser(newUser);
+        return "User Created";
     }
 
     public Optional<UserResponse> findUserById(UserRequest request) {
@@ -41,10 +42,11 @@ public class UserService {
     }
 
     public Boolean login(UserRequest request) {
+        boolean response = false;
         if (userRepository.existsUserByEmail(request.email)) {
             Optional<User> user = userRepository.findUserByEmail(request.email);
-            return Objects.equals(user.get().getHashPassword(), request.password);
+            response = Objects.equals(user.get().getHashPassword(), request.password);
         }
-        return false;
+        return response;
     }
 }
