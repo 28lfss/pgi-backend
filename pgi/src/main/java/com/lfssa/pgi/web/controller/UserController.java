@@ -1,5 +1,6 @@
 package com.lfssa.pgi.web.controller;
 
+import com.lfssa.pgi.dto.UserResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.application.service.UserService;
@@ -22,22 +23,22 @@ public class UserController {
     }
 
     @GetMapping
-    public Optional<User> findUserById(@RequestBody UserRequest request) {
+    public Optional<UserResponse> findUserById(@RequestBody UserRequest request) {
         return userService.findUserById(request);
     }
 
     @GetMapping("/all")
-    public List<User> findAllUsers() {
+    public List<UserResponse> findAllUsers() {
         return userService.findAllUsers();
+    }
+
+    @GetMapping("/email")
+    public Optional<UserResponse> findUserByEmail(@RequestBody UserRequest request) {
+        return userService.findUserByEmail(request);
     }
 
     @GetMapping("/login")
     public Boolean existsUserByEmail(@RequestBody UserRequest request) {
-        return userService.existsUserByEmail(request);
-    };
-
-    @GetMapping("/email")
-    public Optional<User> findUserByEmail(@RequestBody UserRequest request) {
-        return userService.findUserByEmail(request);
+        return userService.login(request);
     }
 }

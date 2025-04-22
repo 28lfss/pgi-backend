@@ -24,7 +24,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private AccessLevel accessLevel;
-    private boolean isActive;
+    private boolean active;
     private String device;
 
     public enum AccessLevel{
