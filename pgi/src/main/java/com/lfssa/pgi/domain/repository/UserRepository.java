@@ -2,7 +2,6 @@ package com.lfssa.pgi.domain.repository;
 
 import com.lfssa.pgi.domain.model.User;
 
-import java.util.UUID;
 import java.util.List;
 import java.util.Optional;
 

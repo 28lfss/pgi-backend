@@ -7,7 +7,6 @@ import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor

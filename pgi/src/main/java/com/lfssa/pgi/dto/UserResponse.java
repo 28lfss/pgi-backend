@@ -3,8 +3,6 @@ package com.lfssa.pgi.dto;
 import com.lfssa.pgi.domain.model.User;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class UserResponse {
     private long userId;

@@ -4,7 +4,6 @@ import com.lfssa.pgi.dto.UserResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.application.service.UserService;
-import com.lfssa.pgi.domain.model.User;
 import com.lfssa.pgi.dto.UserRequest;
 
 import java.util.List;
