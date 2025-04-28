@@ -21,16 +21,18 @@ dependencies {
 	// CORE
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.4.4'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.4.4'
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.4'
 
 	// TESTING
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	// DATABASE
+	// POSTGRESQL
 	implementation 'org.postgresql:postgresql:42.7.5'
 	implementation 'com.zaxxer:HikariCP:6.3.0'
+
+	// DATABASE CONNECTION
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.4.4'
 
 	// LOMBOK
 	compileOnly 'org.projectlombok:lombok:1.18.38'
