@@ -23,7 +23,7 @@ public class UserService {
         newUser.setUsername(request.username);
         newUser.setEmail(request.email);
         newUser.setHashPassword(request.password);
-        newUser.setAccessLevel(User.AccessLevel.COLLAB);
+        newUser.setAccessLevel(User.AccessLevel.collab);
 
         userRepository.createUser(newUser);
         return "User Created";
@@ -43,6 +43,7 @@ public class UserService {
 
     public Boolean login(UserRequest request) {
         boolean response = false;
+        // TODO: update for hash password decoder;
         if (userRepository.existsUserByEmail(request.email)) {
             Optional<User> user = userRepository.findUserByEmail(request.email);
             response = Objects.equals(user.get().getHashPassword(), request.password);

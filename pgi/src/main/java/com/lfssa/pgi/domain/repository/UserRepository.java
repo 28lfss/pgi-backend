@@ -10,7 +10,9 @@ public interface UserRepository {
 
     void createUser(User user);
 
-    Optional<User> findUserById(UUID id);
+    Boolean existsUserById(long id);
+
+    Optional<User> findUserById(long id);
 
     List<User> findAllUsers();
 
