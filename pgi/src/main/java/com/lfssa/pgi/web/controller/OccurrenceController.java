@@ -4,6 +4,8 @@ import com.lfssa.pgi.application.service.OccurrenceService;
 import com.lfssa.pgi.dto.OccurrenceRequest;
 import com.lfssa.pgi.dto.OccurrenceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class OccurrenceController {
     private OccurrenceService occurrenceService;
 
     @PostMapping
-    public String createOccurrence(@RequestBody OccurrenceRequest request) {
+    public ResponseEntity<String> createOccurrence(@RequestBody @Valid OccurrenceRequest request) {
         return occurrenceService.createOccurrence(request);
     }
 

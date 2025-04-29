@@ -6,6 +6,8 @@ import com.lfssa.pgi.domain.repository.UserRepository;
 import com.lfssa.pgi.dto.OccurrenceRequest;
 import com.lfssa.pgi.dto.OccurrenceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,8 @@ public class OccurrenceService {
     @Autowired
     private UserRepository userRepository;
 
-    public String createOccurrence(OccurrenceRequest request) {
-        String message = "Error Creating Occurrence";
-        if(userRepository.existsUserById(request.occurrenceRegistrantId)) {
+    public ResponseEntity<String> createOccurrence(OccurrenceRequest request) {
+        if (userRepository.existsUserById(request.occurrenceRegistrantId)) {
             Occurrence newOccurrence = new Occurrence();
             newOccurrence.setArea(request.area);
             newOccurrence.setDescription(request.description);
@@ -32,9 +33,10 @@ public class OccurrenceService {
 
             occurrenceRepository.createOccurrence(newOccurrence);
 
-            message = "Occurrence Created";
+            return new ResponseEntity<>("Occurrence Created", HttpStatus.CREATED);
         }
-        return message;
+        //ERROR RESPONSE
+        return new ResponseEntity<>("User doesn't exist", HttpStatus.BAD_REQUEST);
     }
 
     public List<OccurrenceResponse> findAllOccurrences() {
