@@ -8,7 +8,6 @@ import com.lfssa.pgi.domain.model.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class UserRepositoryAdapter implements UserRepository {
@@ -22,7 +21,12 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserById(UUID id) {
+    public Boolean existsUserById(long id) {
+        return postgresqlUserRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<User> findUserById(long id) {
         return postgresqlUserRepository.findById(id);
     }
 

@@ -9,6 +9,6 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: pgidb
     volumes:
-      - ./dbschema/fispq_schema.sql:/docker-entrypoint-initdb.d/fispq_schema.sql
+      - ./dbschema/db_schema.sql:/docker-entrypoint-initdb.d/db_schema.sql
     ports:
       - "5432:5432"
