@@ -1,23 +1,27 @@
-package com.lfssa.pgi.infrastructure.adapter;
+package com.lfssa.pgi.adapters.outbound.repository;
 
-import com.lfssa.pgi.infrastructure.postgresql.PostgresqlUserRepository;
+import com.lfssa.pgi.utils.UserJpaMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lfssa.pgi.domain.repository.UserRepository;
-import com.lfssa.pgi.domain.model.User;
+import com.lfssa.pgi.domain.user.UserRepository;
+import com.lfssa.pgi.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
-public class UserRepositoryAdapter implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     PostgresqlUserRepository postgresqlUserRepository;
 
+    @Autowired
+    UserJpaMapper userMapper;
+
     @Override
     public void createUser(User user) {
-        postgresqlUserRepository.save(user);
+        postgresqlUserRepository.save(userMapper.userToJpaUser(user));
     }
 
     @Override
@@ -27,12 +31,12 @@ public class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public Optional<User> findUserById(long id) {
-        return postgresqlUserRepository.findById(id);
+        return postgresqlUserRepository.findById(id).map(userMapper::jpaUserToUser);
     }
 
     @Override
     public List<User> findAllUsers() {
-        return postgresqlUserRepository.findAll();
+        return postgresqlUserRepository.findAll().stream().map(userMapper::jpaUserToUser).collect(Collectors.toList());
     }
 
     @Override
@@ -42,6 +46,6 @@ public class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public Optional<User> findUserByEmail(String email) {
-        return postgresqlUserRepository.findUserByEmail(email);
+        return postgresqlUserRepository.findUserByEmail(email).map(userMapper::jpaUserToUser);
     }
 }

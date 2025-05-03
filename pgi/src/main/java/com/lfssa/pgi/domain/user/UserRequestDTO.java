@@ -1,6 +1,6 @@
-package com.lfssa.pgi.dto;
+package com.lfssa.pgi.domain.user;
 
-public class UserRequest {
+public class UserRequestDTO {
     public long userId;
     public String username;
     public String email;

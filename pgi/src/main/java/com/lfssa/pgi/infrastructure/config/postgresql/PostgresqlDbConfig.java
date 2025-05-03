@@ -1,4 +1,4 @@
-package com.lfssa.pgi.infrastructure.postgresql;
+package com.lfssa.pgi.infrastructure.config.postgresql;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;

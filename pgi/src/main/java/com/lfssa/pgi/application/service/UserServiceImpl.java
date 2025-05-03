@@ -1,11 +1,13 @@
 package com.lfssa.pgi.application.service;
 
-import com.lfssa.pgi.dto.UserResponse;
+import com.lfssa.pgi.application.usecases.UserUseCases;
+import com.lfssa.pgi.domain.user.UserResponseDTO;
+import com.lfssa.pgi.utils.UserJpaMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lfssa.pgi.domain.repository.UserRepository;
-import com.lfssa.pgi.domain.model.User;
-import com.lfssa.pgi.dto.UserRequest;
+import com.lfssa.pgi.domain.user.UserRepository;
+import com.lfssa.pgi.domain.user.User;
+import com.lfssa.pgi.domain.user.UserRequestDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +15,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserUseCases {
     @Autowired
     private UserRepository userRepository;
 
-    public String createUser(UserRequest request) {
+    @Autowired
+    private UserJpaMapper userMapper;
+
+    public String createUser(UserRequestDTO request) {
         User newUser = new User();
 
         newUser.setUsername(request.username);
@@ -29,19 +34,19 @@ public class UserService {
         return "User Created";
     }
 
-    public Optional<UserResponse> findUserById(UserRequest request) {
-        return userRepository.findUserById(request.userId).map(UserResponse::from);
+    public Optional<UserResponseDTO> findUserById(UserRequestDTO request) {
+        return userRepository.findUserById(request.userId).map(userMapper::userToResponse);
     }
 
-    public List<UserResponse> findAllUsers() {
-        return userRepository.findAllUsers().stream().map(UserResponse::from).collect(Collectors.toList());
+    public List<UserResponseDTO> findAllUsers() {
+        return userRepository.findAllUsers().stream().map(userMapper::userToResponse).collect(Collectors.toList());
     }
 
-    public Optional<UserResponse> findUserByEmail(UserRequest request) {
-        return userRepository.findUserByEmail(request.email).map(UserResponse::from);
+    public Optional<UserResponseDTO> findUserByEmail(UserRequestDTO request) {
+        return userRepository.findUserByEmail(request.email).map(userMapper::userToResponse);
     }
 
-    public Boolean login(UserRequest request) {
+    public Boolean login(UserRequestDTO request) {
         boolean response = false;
         // TODO: update for hash password decoder;
         if (userRepository.existsUserByEmail(request.email)) {

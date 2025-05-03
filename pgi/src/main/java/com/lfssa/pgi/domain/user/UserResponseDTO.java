@@ -1,30 +1,23 @@
-package com.lfssa.pgi.dto;
+package com.lfssa.pgi.domain.user;
 
-import com.lfssa.pgi.domain.model.User;
 import lombok.Data;
 
 @Data
-public class UserResponse {
+public class UserResponseDTO {
     private long userId;
     private String username;
     private String email;
     private String sessionToken;
-    private long loginTimestamp;
     private User.AccessLevel accessLevel;
-    private boolean active;
-    private String device;
 
     // User mapper that convert to Response
-    public static UserResponse from(User user) {
-        UserResponse response = new UserResponse();
+    public static UserResponseDTO from(User user) {
+        UserResponseDTO response = new UserResponseDTO();
         response.setUserId(user.getUserId());
         response.setUsername(user.getUsername());
         response.setEmail(user.getEmail());
         response.setSessionToken(user.getSessionToken());
-        response.setLoginTimestamp(user.getLoginTimestamp());
         response.setAccessLevel(user.getAccessLevel());
-        response.setActive(user.isActive());
-        response.setDevice(user.getDevice());
         return response;
     }
 }

@@ -1,5 +1,6 @@
-package com.lfssa.pgi.domain.model;
+package com.lfssa.pgi.adapters.outbound.entities;
 
+import com.lfssa.pgi.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class JpaUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", columnDefinition = "serial")
@@ -36,7 +37,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @Column(name = "access_level")
-    private AccessLevel accessLevel;
+    private User.AccessLevel accessLevel;
 
     @Column(name = "active")
     private boolean active;
@@ -45,11 +46,12 @@ public class User {
     private String device;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Occurrence> occurrences;
+    private Set<JpaOccurrenceEntity> occurrences;
 
     public enum AccessLevel{
         collab,
         admin
     }
+
 }
 
