@@ -1,5 +1,8 @@
 package com.lfssa.pgi.adapters.outbound.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lfssa.pgi.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -37,16 +40,13 @@ public class JpaUserEntity {
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     @Column(name = "access_level")
-    private User.AccessLevel accessLevel;
+    private AccessLevel accessLevel;
 
     @Column(name = "active")
     private boolean active;
 
     @Column(name = "device")
     private String device;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<JpaOccurrenceEntity> occurrences;
 
     public enum AccessLevel{
         collab,

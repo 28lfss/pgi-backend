@@ -15,7 +15,6 @@ public class User {
     private AccessLevel accessLevel;
     private boolean active;
     private String device;
-    private Set<Occurrence> occurrences;
 
     public enum AccessLevel{
         collab,
@@ -34,14 +33,6 @@ public class User {
         this.accessLevel = accessLevel;
         this.active = active;
         this.device = device;
-    }
-
-    public Set<Occurrence> getOccurrences() {
-        return occurrences;
-    }
-
-    public void setOccurrences(Set<Occurrence> occurrences) {
-        this.occurrences = occurrences;
     }
 
     public long getUserId() {
