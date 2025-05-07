@@ -48,4 +48,9 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findUserByEmail(String email) {
         return postgresqlUserRepository.findUserByEmail(email).map(userMapper::jpaUserToUser);
     }
+
+    @Override
+    public Boolean existsUserByUsername(String username) {
+        return postgresqlUserRepository.existsUserByUsername(username);
+    }
 }

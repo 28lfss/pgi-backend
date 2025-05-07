@@ -2,6 +2,7 @@ package com.lfssa.pgi.adapters.inboud.controller;
 
 import com.lfssa.pgi.application.usecases.UserUseCases;
 import com.lfssa.pgi.domain.user.UserResponseDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.user.UserRequestDTO;
@@ -16,7 +17,7 @@ public class UserController {
     private UserUseCases userUseCases;
 
     @PostMapping
-    public String createUser(@RequestBody UserRequestDTO request) {
+    public ResponseEntity<String> createUser(@RequestBody UserRequestDTO request) {
         return userUseCases.createUser(request);
     }
 

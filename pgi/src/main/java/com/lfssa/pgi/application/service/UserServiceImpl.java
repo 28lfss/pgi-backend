@@ -3,6 +3,8 @@ package com.lfssa.pgi.application.service;
 import com.lfssa.pgi.application.usecases.UserUseCases;
 import com.lfssa.pgi.domain.user.UserResponseDTO;
 import com.lfssa.pgi.utils.UserJpaMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.user.UserRepository;
@@ -22,16 +24,21 @@ public class UserServiceImpl implements UserUseCases {
     @Autowired
     private UserJpaMapper userMapper;
 
-    public String createUser(UserRequestDTO request) {
-        User newUser = new User();
+    public ResponseEntity<String> createUser(UserRequestDTO request) {
+        ResponseEntity<String> response = new ResponseEntity<>("Username or Email already been used", HttpStatus.BAD_REQUEST);
 
-        newUser.setUsername(request.username);
-        newUser.setEmail(request.email);
-        newUser.setHashPassword(request.password);
-        newUser.setAccessLevel(User.AccessLevel.collab);
+        if(!userRepository.existsUserByEmail(request.email) & !userRepository.existsUserByUsername(request.username)) {
+            User newUser = new User();
+            newUser.setUsername(request.username);
+            newUser.setEmail(request.email);
+            newUser.setHashPassword(request.password);
+            newUser.setAccessLevel(User.AccessLevel.collab);
+            newUser.setActive(true);
+            userRepository.createUser(newUser);
 
-        userRepository.createUser(newUser);
-        return "User Created";
+            response = new ResponseEntity<>("OK", HttpStatus.CREATED);
+        }
+        return response;
     }
 
     public Optional<UserResponseDTO> findUserById(UserRequestDTO request) {
