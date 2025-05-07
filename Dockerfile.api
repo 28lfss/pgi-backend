@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM gradle:8.2.1-jdk21 AS build
+FROM openjdk:21-slim AS build
 WORKDIR /app
 COPY . .
 RUN ./gradlew clean build --no-daemon
