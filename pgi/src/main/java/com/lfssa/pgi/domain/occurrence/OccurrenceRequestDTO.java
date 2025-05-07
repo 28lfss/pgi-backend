@@ -1,8 +1,8 @@
-package com.lfssa.pgi.dto;
+package com.lfssa.pgi.domain.occurrence;
 
 import jakarta.validation.constraints.NotNull;
 
-public class OccurrenceRequest {
+public class OccurrenceRequestDTO {
     @NotNull(message = "Occurrence should have a area")
     public String area;
 

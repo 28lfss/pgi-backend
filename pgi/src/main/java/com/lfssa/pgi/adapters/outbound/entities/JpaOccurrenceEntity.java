@@ -1,4 +1,4 @@
-package com.lfssa.pgi.domain.model;
+package com.lfssa.pgi.adapters.outbound.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,7 +10,7 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 @NoArgsConstructor
 @Entity
 @Table(name = "occurrences")
-public class Occurrence {
+public class JpaOccurrenceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "occurrence_id", columnDefinition = "serial")
@@ -35,9 +35,9 @@ public class Occurrence {
 
     @ManyToOne
     @JoinColumn(name = "occurrence_registrant_id", referencedColumnName = "user_id")
-    private User user;
+    private JpaUserEntity user;
 
-    public enum Status{
+    public enum Status {
         open,
         revision,
         closed
