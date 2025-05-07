@@ -13,7 +13,7 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 public class JpaOccurrenceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "occurrence_id", columnDefinition = "serial")
+    @Column(name = "occurrence_id")
     private long occurrenceId;
 
     @Column(name = "area")

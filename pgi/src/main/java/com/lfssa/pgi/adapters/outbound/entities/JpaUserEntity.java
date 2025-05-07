@@ -19,7 +19,7 @@ import java.util.Set;
 public class JpaUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", columnDefinition = "serial")
+    @Column(name = "user_id")
     private long userId;
 
     @Column(name = "username")
