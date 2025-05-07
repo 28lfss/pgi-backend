@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/pgi-backend.iml" filepath="$PROJECT_DIR$/.idea/pgi-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pgi.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pgi.main.iml" />
     </modules>
   </component>
 </project>
