@@ -9,6 +9,9 @@ COPY pgi/gradle ./gradle
 # Copy application source files
 COPY pgi /app/pgi
 
+# Grant execute permissions to gradlew
+RUN chmod +x gradlew
+
 # Run the Gradle build
 RUN ./gradlew clean build --no-daemon
 
