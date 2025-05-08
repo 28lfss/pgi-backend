@@ -1,12 +1,9 @@
-# Stage 1: Build the application
-FROM openjdk:21-slim AS build
-WORKDIR /app
-COPY . .
-RUN gradle build --no-daemon
-
-# Stage 2: Run the application
 FROM openjdk:21-slim
+
 WORKDIR /app
+
 COPY --from=build /app/pgi/build/libs/pgi-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
