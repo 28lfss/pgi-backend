@@ -3,8 +3,8 @@ FROM openjdk:21-slim AS build
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
-COPY gradlew gradlew.bat settings.gradle build.gradle ./
-COPY gradle ./gradle
+COPY pgi/gradlew pgi/gradlew.bat pgi/settings.gradle pgi/build.gradle ./
+COPY pgi/gradle ./gradle
 
 # Copy application source files
 COPY pgi /app/pgi
