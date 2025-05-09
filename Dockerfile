@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM openjdk:21-slim AS build
+FROM openjdk:21-slim
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
@@ -18,14 +18,8 @@ RUN ./gradlew clean build --no-daemon || (echo "Gradle build failed" && exit 1)
 # Verify if JAR file exists
 RUN ls -lah
 
-# Stage 2: Run the application
-FROM openjdk:21-slim
-WORKDIR /app
-
 # Copy the JAR file from the build stage
-COPY --from=build ./pgi/build/libs/*.jar app.jar
-
-RUN ls -lah ./pgi/build/libs/
+COPY ./pgi/build/libs/*.jar app.jar
 
 # Expose the application port
 EXPOSE 8080
