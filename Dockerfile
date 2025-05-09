@@ -23,12 +23,13 @@ FROM openjdk:21-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage
-#COPY --from=build ./pgi/build/libs/*.jar app.jar
+COPY --from=build /app/pgi /app/pgi
 
-RUN ls -lah ./
 RUN ls -lah /
 RUN ls -lah /app/
-RUN ls -lah /pgi/
+RUN ls -lah /app/pgi/
+RUN ls -lah /app/pgi/build/
+RUN ls -lah /app/pgi/build/libs/
 
 # Expose the application port
 EXPOSE 8080
