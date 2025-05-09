@@ -15,4 +15,4 @@ RUN chmod +x gradlew
 # Run the Gradle build
 RUN ./gradlew clean build --no-daemon
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
