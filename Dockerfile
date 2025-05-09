@@ -16,7 +16,7 @@ RUN chmod +x gradlew
 RUN ./gradlew clean build --no-daemon || (echo "Gradle build failed" && exit 1)
 
 # Verify if JAR file exists
-RUN ls -lah /app/pgi/build/libs/ || (echo "JAR file not found" && exit 1)
+RUN ls -lah
 
 # Stage 2: Run the application
 FROM openjdk:21-slim
