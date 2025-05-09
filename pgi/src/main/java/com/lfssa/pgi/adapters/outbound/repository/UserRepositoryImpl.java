@@ -20,8 +20,8 @@ public class UserRepositoryImpl implements UserRepository {
     UserJpaMapper userMapper;
 
     @Override
-    public void createUser(User user) {
-        postgresqlUserRepository.save(userMapper.userToJpaUser(user));
+    public User createUser(User user) {
+        return userMapper.jpaUserToUser(postgresqlUserRepository.save(userMapper.userToJpaUser(user)));
     }
 
     @Override
