@@ -13,15 +13,14 @@ COPY pgi /app/pgi
 RUN chmod +x gradlew
 
 # Run the Gradle build
-RUN ./gradlew clean build --no-daemon || (echo "Gradle build failed" && exit 1)
+RUN ./gradlew clean build --no-daemon
 
 # TODO: REMOVE THIS SHIT
 RUN ls -lah
 RUN ls -lah /
 RUN ls -lah /app/
 RUN ls -lah /app/pgi/
-RUN ls -lah /app/pgi/build/
-RUN ls -lah /app/pgi/build/libs/
+RUN ls -lah ./build/
 
 # Expose the application port
 EXPOSE 8080
