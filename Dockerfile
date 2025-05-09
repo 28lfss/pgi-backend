@@ -21,6 +21,7 @@ RUN ls -lah /
 RUN ls -lah /app/
 RUN ls -lah /app/pgi/
 RUN ls -lah ./build/
+RUN ls -lah ./build/libs/
 
 # Expose the application port
 EXPOSE 8080
