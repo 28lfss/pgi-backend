@@ -13,11 +13,20 @@ COPY pgi /app/pgi
 RUN chmod +x gradlew
 
 # Run the Gradle build
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build --no-daemon || (echo "Gradle build failed" && exit 1)
+
+# Verify if JAR file exists
+RUN ls -lah /app/pgi/build/libs/ || (echo "JAR file not found" && exit 1)
 
 # Stage 2: Run the application
 FROM openjdk:21-slim
 WORKDIR /app
-COPY --from=build ./pgi/build/libs/pgi-0.0.1-SNAPSHOT.jar app.jar
+
+# Copy the JAR file from the build stage
+COPY --from=build /app/pgi/build/libs/*.jar app.jar
+
+# Expose the application port
 EXPOSE 8080
+
+# Set the entry point for the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
