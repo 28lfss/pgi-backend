@@ -15,4 +15,4 @@ RUN chmod +x gradlew
 # Run the Gradle build
 RUN ./gradlew clean build --no-daemon
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/pgi/build/libs/pgi-0.0.1-SNAPSHOT.jar"]
