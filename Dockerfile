@@ -16,15 +16,15 @@ RUN chmod +x gradlew
 RUN ./gradlew clean build --no-daemon
 
 # TODO: REMOVE THIS SHIT
-RUN ls -lah
-RUN ls -lah /
-RUN ls -lah /app/
-RUN ls -lah /app/pgi/
-RUN ls -lah ./build/
-RUN ls -lah ./build/libs/
+#RUN ls -lah
+#RUN ls -lah /
+#RUN ls -lah /app/
+#RUN ls -lah /app/pgi/
+#RUN ls -lah ./build/
+#RUN ls -lah ./build/libs/
 
 # Expose the application port
 EXPOSE 8080
 
 # Set the entry point for the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "./build/libs/pgi-0.0.1-SNAPSHOT.jar"]
