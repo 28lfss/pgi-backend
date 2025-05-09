@@ -25,6 +25,8 @@ WORKDIR /app
 # Copy the JAR file from the build stage
 COPY --from=build ./pgi/build/libs/*.jar app.jar
 
+RUN ls -lah ./pgi/build/libs/
+
 # Expose the application port
 EXPOSE 8080
 
