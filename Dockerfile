@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM openjdk:21-slim AS build
+FROM openjdk:21-slim
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
@@ -15,16 +15,8 @@ RUN chmod +x gradlew
 # Run the Gradle build
 RUN ./gradlew clean build --no-daemon || (echo "Gradle build failed" && exit 1)
 
-# Verify if JAR file exists
+# TODO: REMOVE THIS SHIT
 RUN ls -lah
-
-# Stage 2: Run the application
-FROM openjdk:21-slim
-WORKDIR /app
-
-# Copy the JAR file from the build stage
-COPY --from=build /app/pgi /app/pgi
-
 RUN ls -lah /
 RUN ls -lah /app/
 RUN ls -lah /app/pgi/
