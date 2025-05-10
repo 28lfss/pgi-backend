@@ -28,9 +28,15 @@ public class OccurrenceController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/all/{userId}")
     public ResponseEntity<List<OccurrenceResponseDTO>> FindOccurrencesByUserId(@PathVariable long userId) {
         List<OccurrenceResponseDTO> response = occurrenceUseCases.FindOccurrencesByUserId(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{occurrenceId}")
+    public ResponseEntity<OccurrenceResponseDTO> FindOccurrenceById(@PathVariable long occurrenceId) {
+        OccurrenceResponseDTO response = occurrenceUseCases.FindOccurrenceById(occurrenceId);
         return ResponseEntity.ok(response);
     }
 }

@@ -11,4 +11,6 @@ public interface OccurrenceUseCases {
     List<OccurrenceResponseDTO> findAllOccurrences();
 
     List<OccurrenceResponseDTO> FindOccurrencesByUserId(long userId);
+
+    OccurrenceResponseDTO FindOccurrenceById(long occurrenceId);
 }

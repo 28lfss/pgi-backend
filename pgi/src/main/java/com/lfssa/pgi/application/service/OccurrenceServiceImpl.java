@@ -6,6 +6,7 @@ import com.lfssa.pgi.domain.occurrence.OccurrenceRepository;
 import com.lfssa.pgi.domain.user.UserRepository;
 import com.lfssa.pgi.domain.occurrence.OccurrenceRequestDTO;
 import com.lfssa.pgi.domain.occurrence.OccurrenceResponseDTO;
+import com.lfssa.pgi.infrastructure.config.exceptions.OccurrenceNotFoundException;
 import com.lfssa.pgi.infrastructure.config.exceptions.UserNotFoundException;
 import com.lfssa.pgi.utils.OccurrenceJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,7 @@ public class OccurrenceServiceImpl implements OccurrenceUseCases {
     private UserRepository userRepository;
 
     public OccurrenceResponseDTO createOccurrence(OccurrenceRequestDTO request) {
-        if (!userRepository.existsUserById(request.occurrenceRegistrantId)) {
-            throw new UserNotFoundException("User not found");
-        }
+        if (!userRepository.existsUserById(request.occurrenceRegistrantId)) throw new UserNotFoundException("User not found");
 
         Occurrence newOccurrence = new Occurrence();
         newOccurrence.setArea(request.area);
@@ -52,14 +51,18 @@ public class OccurrenceServiceImpl implements OccurrenceUseCases {
     }
 
     public List<OccurrenceResponseDTO> FindOccurrencesByUserId(long userId) {
-        if (!userRepository.existsUserById(userId)) {
-            throw new UserNotFoundException("User not found");
-        }
+        if (!userRepository.existsUserById(userId)) throw new UserNotFoundException("User not found");
 
         return occurrenceRepository
                 .FindOccurrencesByUser(userRepository.findUserById(userId).get())
                 .stream()
                 .map(occurrenceMapper::occurrenceToResponse)
                 .collect(Collectors.toList());
+    }
+
+    public OccurrenceResponseDTO FindOccurrenceById(long occurrenceId) {
+        if (!occurrenceRepository.ExistsById(occurrenceId)) throw new OccurrenceNotFoundException("Occurrence not found");
+
+        return occurrenceMapper.occurrenceToResponse(occurrenceRepository.FindOccurrenceById(occurrenceId));
     }
 }
