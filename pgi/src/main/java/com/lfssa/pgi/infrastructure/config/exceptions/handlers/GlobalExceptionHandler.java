@@ -1,6 +1,7 @@
 package com.lfssa.pgi.infrastructure.config.exceptions.handlers;
 
 import com.lfssa.pgi.infrastructure.config.exceptions.InvalidCredentialsException;
+import com.lfssa.pgi.infrastructure.config.exceptions.OccurrenceNotFoundException;
 import com.lfssa.pgi.infrastructure.config.exceptions.UserAlreadyExistsException;
 import com.lfssa.pgi.infrastructure.config.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -47,4 +48,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(OccurrenceNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleOccurrenceNotFound(OccurrenceNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

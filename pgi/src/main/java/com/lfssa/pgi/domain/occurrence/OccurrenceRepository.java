@@ -10,4 +10,8 @@ public interface OccurrenceRepository {
     List<Occurrence> findAllOccurrences();
 
     List<Occurrence> FindOccurrencesByUser(User user);
+
+    boolean ExistsById(long occurrenceId);
+
+    Occurrence FindOccurrenceById(long occurrenceId);
 }

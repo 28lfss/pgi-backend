@@ -23,7 +23,6 @@ public class OccurrenceRepositoryImpl implements OccurrenceRepository {
     @Autowired
     private UserJpaMapper userJpaMapper;
 
-    @Override
     public Occurrence createOccurrence(Occurrence occurrence) {
         return occurrenceJpaMapper
                 .jpaOccurrenceToOccurrence(
@@ -33,7 +32,6 @@ public class OccurrenceRepositoryImpl implements OccurrenceRepository {
                 );
     }
 
-    @Override
     public List<Occurrence> findAllOccurrences() {
         return postgresqlOccurrenceRepository
                 .findAll()
@@ -42,12 +40,19 @@ public class OccurrenceRepositoryImpl implements OccurrenceRepository {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<Occurrence> FindOccurrencesByUser(User user) {
         return postgresqlOccurrenceRepository
                 .FindOccurrencesByUser(userJpaMapper.userToJpaUser(user))
                 .stream()
                 .map(occurrenceJpaMapper::jpaOccurrenceToOccurrence)
                 .collect(Collectors.toList());
+    }
+
+    public boolean ExistsById(long occurrenceId) {
+        return postgresqlOccurrenceRepository.existsById(occurrenceId);
+    }
+
+    public Occurrence FindOccurrenceById(long occurrenceId) {
+        return postgresqlOccurrenceRepository.findById(occurrenceId).map(occurrenceJpaMapper::jpaOccurrenceToOccurrence).get();
     }
 }
