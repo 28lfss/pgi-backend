@@ -17,13 +17,20 @@ public class OccurrenceController {
     private OccurrenceUseCases occurrenceUseCases;
 
     @PostMapping
-    public ResponseEntity<String> createOccurrence(@RequestBody @Valid OccurrenceRequestDTO request) {
-        return occurrenceUseCases.createOccurrence(request);
+    public ResponseEntity<OccurrenceResponseDTO> createOccurrence(@RequestBody @Valid OccurrenceRequestDTO request) {
+        OccurrenceResponseDTO response = occurrenceUseCases.createOccurrence(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public List<OccurrenceResponseDTO> findAllOccurrences() {
-        return occurrenceUseCases.findAllOccurrences();
+    public ResponseEntity<List<OccurrenceResponseDTO>> findAllOccurrences() {
+        List<OccurrenceResponseDTO> response = occurrenceUseCases.findAllOccurrences();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<OccurrenceResponseDTO>> FindOccurrencesByUserId(@PathVariable long userId) {
+        List<OccurrenceResponseDTO> response = occurrenceUseCases.FindOccurrencesByUserId(userId);
+        return ResponseEntity.ok(response);
     }
 }
-
