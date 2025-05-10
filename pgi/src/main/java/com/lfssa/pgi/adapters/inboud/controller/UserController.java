@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.user.UserRequestDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/user")
@@ -17,27 +16,32 @@ public class UserController {
     private UserUseCases userUseCases;
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserRequestDTO request) {
-        return userUseCases.createUser(request);
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO request) {
+        UserResponseDTO response = userUseCases.createUser(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public Optional<UserResponseDTO> findUserById(@RequestBody UserRequestDTO request) {
-        return userUseCases.findUserById(request);
+    public ResponseEntity<UserResponseDTO> findUserById(@RequestBody UserRequestDTO request) {
+        UserResponseDTO response = userUseCases.findUserById(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public List<UserResponseDTO> findAllUsers() {
-        return userUseCases.findAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> findAllUsers() {
+        List<UserResponseDTO> response = userUseCases.findAllUsers();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/email")
-    public Optional<UserResponseDTO> findUserByEmail(@RequestBody UserRequestDTO request) {
-        return userUseCases.findUserByEmail(request);
+    public ResponseEntity<UserResponseDTO> findUserByEmail(@RequestBody UserRequestDTO request) {
+        UserResponseDTO response = userUseCases.findUserByEmail(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/login")
-    public Boolean existsUserByEmail(@RequestBody UserRequestDTO request) {
-        return userUseCases.login(request);
+    public ResponseEntity<UserResponseDTO> existsUserByEmail(@RequestBody UserRequestDTO request) {
+        UserResponseDTO response = userUseCases.login(request);
+        return ResponseEntity.ok(response);
     }
 }

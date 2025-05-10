@@ -2,9 +2,10 @@ package com.lfssa.pgi.application.service;
 
 import com.lfssa.pgi.application.usecases.UserUseCases;
 import com.lfssa.pgi.domain.user.UserResponseDTO;
+import com.lfssa.pgi.infrastructure.config.exceptions.InvalidCredentialsException;
+import com.lfssa.pgi.infrastructure.config.exceptions.UserAlreadyExistsException;
+import com.lfssa.pgi.infrastructure.config.exceptions.UserNotFoundException;
 import com.lfssa.pgi.utils.UserJpaMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.lfssa.pgi.domain.user.UserRepository;
@@ -24,42 +25,65 @@ public class UserServiceImpl implements UserUseCases {
     @Autowired
     private UserJpaMapper userMapper;
 
-    public ResponseEntity<String> createUser(UserRequestDTO request) {
-        ResponseEntity<String> response = new ResponseEntity<>("Username or Email already been used", HttpStatus.BAD_REQUEST);
-
-        if(!userRepository.existsUserByEmail(request.email) & !userRepository.existsUserByUsername(request.username)) {
-            User newUser = new User();
-            newUser.setUsername(request.username);
-            newUser.setEmail(request.email);
-            newUser.setHashPassword(request.password);
-            newUser.setAccessLevel(User.AccessLevel.collab);
-            newUser.setActive(true);
-            userRepository.createUser(newUser);
-
-            response = new ResponseEntity<>("OK", HttpStatus.CREATED);
+    public UserResponseDTO createUser(UserRequestDTO request)    {
+        if (userRepository.existsUserByUsername(request.username)) {
+            throw new UserAlreadyExistsException("Username already in use");
         }
-        return response;
+
+        if (userRepository.existsUserByEmail(request.email)) {
+            throw new UserAlreadyExistsException("Email already in use");
+        }
+
+        User newUser = new User();
+        newUser.setUsername(request.username);
+        newUser.setEmail(request.email);
+        newUser.setHashPassword(request.password);
+        newUser.setAccessLevel(User.AccessLevel.collab);
+        newUser.setActive(true);
+        User createdUser = userRepository.createUser(newUser);
+
+        return userMapper.userToResponse(createdUser);
     }
 
-    public Optional<UserResponseDTO> findUserById(UserRequestDTO request) {
-        return userRepository.findUserById(request.userId).map(userMapper::userToResponse);
+    public UserResponseDTO findUserById(UserRequestDTO request) {
+        if (!userRepository.existsUserById(request.userId)) {
+            throw new UserNotFoundException("User not found");
+        }
+
+        Optional<User> user = (userRepository.findUserById(request.userId));
+
+        return userMapper.userToResponse(user.get());
     }
 
     public List<UserResponseDTO> findAllUsers() {
-        return userRepository.findAllUsers().stream().map(userMapper::userToResponse).collect(Collectors.toList());
+        List<User> usersList = userRepository.findAllUsers();
+        List<UserResponseDTO> responseList = usersList.stream().map(userMapper::userToResponse).collect(Collectors.toList());
+
+        return responseList;
     }
 
-    public Optional<UserResponseDTO> findUserByEmail(UserRequestDTO request) {
-        return userRepository.findUserByEmail(request.email).map(userMapper::userToResponse);
-    }
-
-    public Boolean login(UserRequestDTO request) {
-        boolean response = false;
-        // TODO: update for hash password decoder;
-        if (userRepository.existsUserByEmail(request.email)) {
-            Optional<User> user = userRepository.findUserByEmail(request.email);
-            response = Objects.equals(user.get().getHashPassword(), request.password);
+    public UserResponseDTO findUserByEmail(UserRequestDTO request) {
+        if (!userRepository.existsUserByEmail(request.email)) {
+            throw new UserNotFoundException("User not found");
         }
-        return response;
+
+        Optional<User> user = (userRepository.findUserByEmail(request.email));
+
+        return userMapper.userToResponse(user.get());
+    }
+
+    public UserResponseDTO login(UserRequestDTO request) {
+        if (!userRepository.existsUserByEmail(request.email)) {
+            throw new UserNotFoundException("User not found with email: " + request.email);
+        }
+
+        Optional<User> user = userRepository.findUserByEmail(request.email);
+
+        // TODO: update for hash password decoder;
+        if (user.isEmpty() || !Objects.equals(user.get().getHashPassword(), request.password)) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return userMapper.userToResponse(user.get());
     }
 }
