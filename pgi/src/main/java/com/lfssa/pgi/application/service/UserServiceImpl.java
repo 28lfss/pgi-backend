@@ -57,9 +57,8 @@ public class UserServiceImpl implements UserUseCases {
 
     public List<UserResponseDTO> findAllUsers() {
         List<User> usersList = userRepository.findAllUsers();
-        List<UserResponseDTO> responseList = usersList.stream().map(userMapper::userToResponse).collect(Collectors.toList());
 
-        return responseList;
+        return usersList.stream().map(userMapper::userToResponse).collect(Collectors.toList());
     }
 
     public UserResponseDTO findUserByEmail(UserRequestDTO request) {

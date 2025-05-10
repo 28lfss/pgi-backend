@@ -19,37 +19,30 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     UserJpaMapper userMapper;
 
-    @Override
     public User createUser(User user) {
         return userMapper.jpaUserToUser(postgresqlUserRepository.save(userMapper.userToJpaUser(user)));
     }
 
-    @Override
     public Boolean existsUserById(long id) {
         return postgresqlUserRepository.existsById(id);
     }
 
-    @Override
     public Optional<User> findUserById(long id) {
         return postgresqlUserRepository.findById(id).map(userMapper::jpaUserToUser);
     }
 
-    @Override
     public List<User> findAllUsers() {
         return postgresqlUserRepository.findAll().stream().map(userMapper::jpaUserToUser).collect(Collectors.toList());
     }
 
-    @Override
     public Boolean existsUserByEmail(String email) {
         return postgresqlUserRepository.existsUserByEmail(email);
     }
 
-    @Override
     public Optional<User> findUserByEmail(String email) {
         return postgresqlUserRepository.findUserByEmail(email).map(userMapper::jpaUserToUser);
     }
 
-    @Override
     public Boolean existsUserByUsername(String username) {
         return postgresqlUserRepository.existsUserByUsername(username);
     }
