@@ -30,7 +30,7 @@ public class JpaOccurrenceEntity {
 
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "Status")
     private Status status;
 
     @ManyToOne
