@@ -33,7 +33,7 @@ public class JpaUserEntity {
 
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
-    @Column(name = "access_level")
+    @Column(name = "access_level", columnDefinition = "AccessLevel")
     private AccessLevel accessLevel;
 
     @Column(name = "active")
