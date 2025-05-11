@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserResponseDTO> existsUserByEmail(@RequestBody UserRequestDTO request) {
         UserResponseDTO response = userUseCases.login(request);
         return ResponseEntity.ok(response);
