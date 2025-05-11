@@ -21,9 +21,9 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public ResponseEntity<UserResponseDTO> findUserById(@RequestBody UserRequestDTO request) {
-        UserResponseDTO response = userUseCases.findUserById(request);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> findUserById(@PathVariable long userId) {
+        UserResponseDTO response = userUseCases.findUserById(userId);
         return ResponseEntity.ok(response);
     }
 

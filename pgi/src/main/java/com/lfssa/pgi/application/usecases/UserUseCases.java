@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserUseCases {
     public UserResponseDTO createUser(UserRequestDTO request);
 
-    public UserResponseDTO findUserById(UserRequestDTO request);
+    public UserResponseDTO findUserById(long userId);
 
     public List<UserResponseDTO> findAllUsers();
 
