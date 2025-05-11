@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserUseCases {
         return userMapper.userToResponse(createdUser);
     }
 
-    public UserResponseDTO findUserById(UserRequestDTO request) {
-        if (!userRepository.existsUserById(request.userId)) {
+    public UserResponseDTO findUserById(long userId) {
+        if (!userRepository.existsUserById(userId)) {
             throw new UserNotFoundException("User not found");
         }
 
-        Optional<User> user = (userRepository.findUserById(request.userId));
+        Optional<User> user = (userRepository.findUserById(userId));
 
         return userMapper.userToResponse(user.get());
     }
