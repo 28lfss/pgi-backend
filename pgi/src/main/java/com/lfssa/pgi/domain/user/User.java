@@ -1,9 +1,5 @@
 package com.lfssa.pgi.domain.user;
 
-import com.lfssa.pgi.domain.occurrence.Occurrence;
-
-import java.util.Set;
-
 public class User {
 
     private long userId;
