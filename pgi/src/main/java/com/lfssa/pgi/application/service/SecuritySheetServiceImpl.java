@@ -4,12 +4,11 @@ import com.lfssa.pgi.application.usecases.SecuritySheetUseCases;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRepository;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRequestDTO;
+import com.lfssa.pgi.domain.securitysheet.SecuritySheetResponseDTO;
 import com.lfssa.pgi.domain.user.UserRepository;
 import com.lfssa.pgi.utils.SecuritySheetJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
@@ -22,16 +21,16 @@ public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
     @Autowired
     UserRepository userRepository;
 
-    public SecuritySheet createSecuritySheet(SecuritySheetRequestDTO request) {
-        SecuritySheet securitySheet = mapper.requestToSecuritySheet(request);
-        securitySheet.setCreationTimestamp(System.currentTimeMillis());
-        securitySheet.setUser(userRepository.findUserById(request.userId).get());
-        securitySheet.setActive(true);
+    public SecuritySheetResponseDTO createSecuritySheet(SecuritySheetRequestDTO request) {
+        SecuritySheet newSecuritySheet = mapper.requestToSecuritySheet(request);
+        newSecuritySheet.setCreationTimestamp(System.currentTimeMillis());
+        newSecuritySheet.setUser(userRepository.findUserById(request.userId).get());
+        newSecuritySheet.setActive(true);
 
-        return securitySheetRepository.createSecuritySheet(securitySheet);
+        return mapper.securitySheetToResponse(securitySheetRepository.createSecuritySheet(newSecuritySheet));
     }
 
-    public Optional<SecuritySheet> getSecuritySheetById(long id) {
-        return securitySheetRepository.getSecuritySheetById(id);
+    public SecuritySheetResponseDTO getSecuritySheetById(long id) {
+        return mapper.securitySheetToResponse(securitySheetRepository.getSecuritySheetById(id));
     }
 }

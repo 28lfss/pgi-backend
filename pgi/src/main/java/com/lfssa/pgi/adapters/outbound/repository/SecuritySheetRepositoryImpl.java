@@ -6,8 +6,6 @@ import com.lfssa.pgi.utils.SecuritySheetJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class SecuritySheetRepositoryImpl implements SecuritySheetRepository {
     @Autowired
@@ -20,7 +18,7 @@ public class SecuritySheetRepositoryImpl implements SecuritySheetRepository {
         return mapper.jpaToSecuritySheet(postgresqlRepository.save(mapper.securitySheetToJpa(securitySheet)));
     }
 
-    public Optional<SecuritySheet> getSecuritySheetById(long id) {
-        return postgresqlRepository.findById(id).map(mapper::jpaToSecuritySheet);
+    public SecuritySheet getSecuritySheetById(long id) {
+        return postgresqlRepository.findById(id).map(mapper::jpaToSecuritySheet).get();
     }
 }

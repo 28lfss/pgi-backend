@@ -1,12 +1,10 @@
 package com.lfssa.pgi.application.usecases;
 
-import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRequestDTO;
-
-import java.util.Optional;
+import com.lfssa.pgi.domain.securitysheet.SecuritySheetResponseDTO;
 
 public interface SecuritySheetUseCases {
-    SecuritySheet createSecuritySheet(SecuritySheetRequestDTO request);
+    SecuritySheetResponseDTO createSecuritySheet(SecuritySheetRequestDTO request);
 
-    Optional<SecuritySheet> getSecuritySheetById(long id);
+    SecuritySheetResponseDTO getSecuritySheetById(long id);
 }
