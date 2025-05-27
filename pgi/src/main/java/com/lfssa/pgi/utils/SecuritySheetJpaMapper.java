@@ -4,6 +4,7 @@ import com.lfssa.pgi.adapters.outbound.entities.JpaSecuritySheetEntity;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRequestDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface SecuritySheetJpaMapper {
@@ -11,5 +12,9 @@ public interface SecuritySheetJpaMapper {
 
     JpaSecuritySheetEntity securitySheetToJpa(SecuritySheet securitySheet);
 
+    @Mapping(target = "securitySheetId", ignore = true)
+    @Mapping(target = "creationTimestamp", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "active", ignore = true)
     SecuritySheet requestToSecuritySheet(SecuritySheetRequestDTO request);
 }
