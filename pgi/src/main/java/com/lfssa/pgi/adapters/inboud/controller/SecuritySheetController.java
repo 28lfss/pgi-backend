@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/sec-sheet")
 public class SecuritySheetController {
@@ -16,6 +18,12 @@ public class SecuritySheetController {
     @PostMapping
     public ResponseEntity<SecuritySheetResponseDTO> createSecuritySheet(@RequestBody SecuritySheetRequestDTO request) {
         SecuritySheetResponseDTO response = useCases.createSecuritySheet(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SecuritySheetResponseDTO>> getAllSecuritySheets() {
+        List<SecuritySheetResponseDTO> response = useCases.getAllSecuritySheets();
         return ResponseEntity.ok(response);
     }
 

@@ -10,6 +10,9 @@ import com.lfssa.pgi.utils.SecuritySheetJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
     @Autowired
@@ -28,6 +31,10 @@ public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
         newSecuritySheet.setActive(true);
 
         return mapper.securitySheetToResponse(securitySheetRepository.createSecuritySheet(newSecuritySheet));
+    }
+
+    public List<SecuritySheetResponseDTO> getAllSecuritySheets() {
+        return securitySheetRepository.getAllSecuritySheets().stream().map(mapper::securitySheetToResponse).collect(Collectors.toList());
     }
 
     public SecuritySheetResponseDTO getSecuritySheetById(long id) {
