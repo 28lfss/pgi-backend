@@ -11,4 +11,6 @@ public interface SecuritySheetUseCases {
     List<SecuritySheetResponseDTO> getAllSecuritySheets();
 
     SecuritySheetResponseDTO getSecuritySheetById(long id);
+
+    String deleteSecuritySheet(long id);
 }

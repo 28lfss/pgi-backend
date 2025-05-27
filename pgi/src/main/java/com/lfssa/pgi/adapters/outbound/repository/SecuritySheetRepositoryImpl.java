@@ -28,4 +28,9 @@ public class SecuritySheetRepositoryImpl implements SecuritySheetRepository {
     public SecuritySheet getSecuritySheetById(long id) {
         return postgresqlRepository.findById(id).map(mapper::jpaToSecuritySheet).get();
     }
+
+    @Override
+    public void deleteSecuritySheet(long id) {
+        postgresqlRepository.deleteById(id);
+    }
 }

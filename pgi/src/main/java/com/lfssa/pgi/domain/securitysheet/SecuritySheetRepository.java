@@ -8,4 +8,6 @@ public interface SecuritySheetRepository {
     List<SecuritySheet> getAllSecuritySheets();
 
     SecuritySheet getSecuritySheetById(long id);
+
+    void deleteSecuritySheet(long id);
 }
