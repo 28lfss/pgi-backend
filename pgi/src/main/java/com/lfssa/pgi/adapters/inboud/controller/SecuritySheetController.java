@@ -27,9 +27,15 @@ public class SecuritySheetController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<SecuritySheetResponseDTO> getSecuritySheetById(@PathVariable long userId) {
-        SecuritySheetResponseDTO response = useCases.getSecuritySheetById(userId);
+    @GetMapping("/{id}")
+    public ResponseEntity<SecuritySheetResponseDTO> getSecuritySheetById(@PathVariable long id) {
+        SecuritySheetResponseDTO response = useCases.getSecuritySheetById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<String> deleteSecuritySheet(@PathVariable long id) {
+        String response =  useCases.deleteSecuritySheet(id);
         return ResponseEntity.ok(response);
     }
 }

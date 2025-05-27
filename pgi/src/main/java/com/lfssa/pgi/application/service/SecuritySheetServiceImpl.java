@@ -40,4 +40,10 @@ public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
     public SecuritySheetResponseDTO getSecuritySheetById(long id) {
         return mapper.securitySheetToResponse(securitySheetRepository.getSecuritySheetById(id));
     }
+
+    @Override
+    public String deleteSecuritySheet(long id) {
+        securitySheetRepository.deleteSecuritySheet(id);
+        return "Security Sheet Deleted";
+    }
 }
