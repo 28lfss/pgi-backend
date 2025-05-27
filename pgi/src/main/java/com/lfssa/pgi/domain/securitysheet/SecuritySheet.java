@@ -6,7 +6,7 @@ public class SecuritySheet {
     private long securitySheetId;
     private long creationTimestamp;
     private User user;
-    private Status status;
+    private boolean active;
     private String manufacture;
     private String productType;
     private String productName;
@@ -14,18 +14,14 @@ public class SecuritySheet {
 
     public SecuritySheet() {}
 
-    public SecuritySheet(long securitySheetId, long creationTimestamp, Status status, String manufacture, String productType, String productName) {
+    public SecuritySheet(long securitySheetId, long creationTimestamp, boolean active, String manufacture, String productType, String productName, String fileLink) {
         this.securitySheetId = securitySheetId;
         this.creationTimestamp = creationTimestamp;
-        this.status = status;
+        this.active = active;
         this.manufacture = manufacture;
         this.productType = productType;
         this.productName = productName;
-    }
-
-    public enum Status{
-        active,
-        inactive;
+        this.fileLink = fileLink;
     }
 
     public long getSecuritySheetId() {
@@ -52,12 +48,12 @@ public class SecuritySheet {
         this.user = user;
     }
 
-    public Status getStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getManufacture() {

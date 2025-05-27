@@ -1,6 +1,5 @@
 package com.lfssa.pgi.adapters.outbound.entities;
 
-import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +18,11 @@ public class JpaSecuritySheetEntity {
     @JoinColumn(name = "security_sheet_registrant_id", referencedColumnName = "user_id")
     private JpaUserEntity user;
 
-    @Column(name = "creationTimestamp")
+    @Column(name = "creation_timestamp")
     public long creationTimestamp;
 
-    @Column(name = "status")
-    public SecuritySheet.Status status;
+    @Column(name = "active")
+    public boolean active;
 
     @Column(name = "manufacture")
     public String manufacture;
@@ -33,4 +32,7 @@ public class JpaSecuritySheetEntity {
 
     @Column(name = "product_name")
     public String productName;
+
+    @Column(name = "file_link")
+    public String fileLink;
 }
