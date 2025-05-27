@@ -3,7 +3,9 @@ package com.lfssa.pgi.application.service;
 import com.lfssa.pgi.application.usecases.SecuritySheetUseCases;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRepository;
+import com.lfssa.pgi.domain.securitysheet.SecuritySheetRequestDTO;
 import com.lfssa.pgi.domain.user.UserRepository;
+import com.lfssa.pgi.utils.SecuritySheetJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,17 @@ public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
     SecuritySheetRepository securitySheetRepository;
 
     @Autowired
+    SecuritySheetJpaMapper mapper;
+
+    @Autowired
     UserRepository userRepository;
 
-    public SecuritySheet createSecuritySheet(SecuritySheet securitySheet, long userId) {
+    public SecuritySheet createSecuritySheet(SecuritySheetRequestDTO request) {
+        SecuritySheet securitySheet = mapper.requestToSecuritySheet(request);
         securitySheet.setCreationTimestamp(System.currentTimeMillis());
-        securitySheet.setUser(userRepository.findUserById(userId).get());
-        securitySheet.setStatus(SecuritySheet.Status.active);
+        securitySheet.setUser(userRepository.findUserById(request.userId).get());
+        securitySheet.setActive(true);
+
         return securitySheetRepository.createSecuritySheet(securitySheet);
     }
 
