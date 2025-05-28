@@ -33,15 +33,19 @@ public class SecuritySheetServiceImpl implements SecuritySheetUseCases {
         return mapper.securitySheetToResponse(securitySheetRepository.createSecuritySheet(newSecuritySheet));
     }
 
-    public List<SecuritySheetResponseDTO> getAllSecuritySheets() {
-        return securitySheetRepository.getAllSecuritySheets().stream().map(mapper::securitySheetToResponse).collect(Collectors.toList());
+    public List<SecuritySheetResponseDTO> getAllSecuritySheetsByFilter(String manufacture, String productType, String productName) {
+        SecuritySheet filters = new SecuritySheet();
+        filters.setManufacture(manufacture);
+        filters.setProductType(productType);
+        filters.setProductName(productName);
+
+        return securitySheetRepository.getAllSecuritySheetsByFilter(filters).stream().map(mapper::securitySheetToResponse).collect(Collectors.toList());
     }
 
     public SecuritySheetResponseDTO getSecuritySheetById(long id) {
         return mapper.securitySheetToResponse(securitySheetRepository.getSecuritySheetById(id));
     }
 
-    @Override
     public String deleteSecuritySheet(long id) {
         securitySheetRepository.deleteSecuritySheet(id);
         return "Security Sheet Deleted";

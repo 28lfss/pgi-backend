@@ -1,7 +1,9 @@
 package com.lfssa.pgi.adapters.outbound.repository;
 
+import com.lfssa.pgi.adapters.outbound.entities.JpaSecuritySheetEntity;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheet;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRepository;
+import com.lfssa.pgi.domain.user.User;
 import com.lfssa.pgi.utils.SecuritySheetJpaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,15 +23,19 @@ public class SecuritySheetRepositoryImpl implements SecuritySheetRepository {
         return mapper.jpaToSecuritySheet(postgresqlRepository.save(mapper.securitySheetToJpa(securitySheet)));
     }
 
-    public List<SecuritySheet> getAllSecuritySheets() {
-        return postgresqlRepository.findAll().stream().map(mapper::jpaToSecuritySheet).collect(Collectors.toList());
+    public List<SecuritySheet> getAllSecuritySheetsByFilter(SecuritySheet filters) {
+        JpaSecuritySheetEntity convertedFilters = mapper.securitySheetToJpa(filters);
+        return postgresqlRepository.findAllByFilters(
+                (convertedFilters.getManufacture() != null && !convertedFilters.getManufacture().isBlank()) ? convertedFilters.getManufacture() : null,
+                (convertedFilters.getProductType() != null && !convertedFilters.getProductType().isBlank()) ? convertedFilters.getProductType() : null,
+                (convertedFilters.getProductName() != null && !convertedFilters.getProductName().isBlank()) ? convertedFilters.getProductName() : null
+        ).stream().map(mapper::jpaToSecuritySheet).collect(Collectors.toList());
     }
 
     public SecuritySheet getSecuritySheetById(long id) {
         return postgresqlRepository.findById(id).map(mapper::jpaToSecuritySheet).get();
     }
 
-    @Override
     public void deleteSecuritySheet(long id) {
         postgresqlRepository.deleteById(id);
     }

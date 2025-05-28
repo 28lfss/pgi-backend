@@ -5,7 +5,7 @@ import java.util.List;
 public interface SecuritySheetRepository {
     SecuritySheet createSecuritySheet(SecuritySheet securitySheet);
 
-    List<SecuritySheet> getAllSecuritySheets();
+    List<SecuritySheet> getAllSecuritySheetsByFilter(SecuritySheet filters);
 
     SecuritySheet getSecuritySheetById(long id);
 

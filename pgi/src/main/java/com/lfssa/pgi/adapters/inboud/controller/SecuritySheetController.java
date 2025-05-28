@@ -4,6 +4,7 @@ import com.lfssa.pgi.application.usecases.SecuritySheetUseCases;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetRequestDTO;
 import com.lfssa.pgi.domain.securitysheet.SecuritySheetResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,12 @@ public class SecuritySheetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SecuritySheetResponseDTO>> getAllSecuritySheets() {
-        List<SecuritySheetResponseDTO> response = useCases.getAllSecuritySheets();
+    public ResponseEntity<List<SecuritySheetResponseDTO>> getAllSecuritySheets(
+            @RequestParam(required = false) String manufacture,
+            @RequestParam(required = false) String productType,
+            @RequestParam(required = false) String productName
+    ) {
+        List<SecuritySheetResponseDTO> response = useCases.getAllSecuritySheetsByFilter(manufacture, productType, productName);
         return ResponseEntity.ok(response);
     }
 

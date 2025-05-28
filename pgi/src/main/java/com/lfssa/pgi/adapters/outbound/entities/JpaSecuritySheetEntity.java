@@ -12,27 +12,27 @@ public class JpaSecuritySheetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "security_sheet_id")
-    public long securitySheetId;
+    private long securitySheetId;
 
     @ManyToOne
     @JoinColumn(name = "security_sheet_registrant_id", referencedColumnName = "user_id")
     private JpaUserEntity user;
 
     @Column(name = "creation_timestamp")
-    public long creationTimestamp;
+    private long creationTimestamp;
 
     @Column(name = "active")
-    public boolean active;
+    private boolean active;
 
     @Column(name = "manufacture")
-    public String manufacture;
+    private String manufacture;
 
     @Column(name = "product_type")
-    public String productType;
+    private String productType;
 
     @Column(name = "product_name")
-    public String productName;
+    private String productName;
 
     @Column(name = "file_link")
-    public String fileLink;
+    private String fileLink;
 }
