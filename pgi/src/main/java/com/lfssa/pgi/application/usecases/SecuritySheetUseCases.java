@@ -8,7 +8,7 @@ import java.util.List;
 public interface SecuritySheetUseCases {
     SecuritySheetResponseDTO createSecuritySheet(SecuritySheetRequestDTO request);
 
-    List<SecuritySheetResponseDTO> getAllSecuritySheets();
+    List<SecuritySheetResponseDTO> getAllSecuritySheetsByFilter(String manufacture, String productType, String productName);
 
     SecuritySheetResponseDTO getSecuritySheetById(long id);
 
