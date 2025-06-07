@@ -18,15 +18,15 @@ public class OccurrenceController {
     private OccurrenceUseCases occurrenceUseCases;
 
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<String> createOccurrence(
+    public ResponseEntity<OccurrenceResponseDTO> createOccurrence(
             @RequestParam String area,
             @RequestParam String description,
             @RequestParam long occurrenceRegistrantId,
             @RequestParam MultipartFile imageFile
     ) {
         OccurrenceRequestDTO request = new OccurrenceRequestDTO(area, description, occurrenceRegistrantId, imageFile);
-        occurrenceUseCases.createOccurrence(request);
-        return ResponseEntity.ok("response");
+        OccurrenceResponseDTO response = occurrenceUseCases.createOccurrence(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
