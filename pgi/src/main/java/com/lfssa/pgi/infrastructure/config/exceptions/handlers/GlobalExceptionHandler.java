@@ -1,9 +1,6 @@
 package com.lfssa.pgi.infrastructure.config.exceptions.handlers;
 
-import com.lfssa.pgi.infrastructure.config.exceptions.InvalidCredentialsException;
-import com.lfssa.pgi.infrastructure.config.exceptions.OccurrenceNotFoundException;
-import com.lfssa.pgi.infrastructure.config.exceptions.UserAlreadyExistsException;
-import com.lfssa.pgi.infrastructure.config.exceptions.UserNotFoundException;
+import com.lfssa.pgi.infrastructure.config.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +12,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    //TODO: validation not been used
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -53,5 +50,12 @@ public class GlobalExceptionHandler {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(StorageException.class)
+    public ResponseEntity<Map<String, String>> handleStorage(StorageException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
