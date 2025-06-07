@@ -4,9 +4,10 @@ import com.lfssa.pgi.application.usecases.OccurrenceUseCases;
 import com.lfssa.pgi.domain.occurrence.OccurrenceRequestDTO;
 import com.lfssa.pgi.domain.occurrence.OccurrenceResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,10 +17,16 @@ public class OccurrenceController {
     @Autowired
     private OccurrenceUseCases occurrenceUseCases;
 
-    @PostMapping
-    public ResponseEntity<OccurrenceResponseDTO> createOccurrence(@RequestBody @Valid OccurrenceRequestDTO request) {
-        OccurrenceResponseDTO response = occurrenceUseCases.createOccurrence(request);
-        return ResponseEntity.ok(response);
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<String> createOccurrence(
+            @RequestParam String area,
+            @RequestParam String description,
+            @RequestParam long occurrenceRegistrantId,
+            @RequestParam MultipartFile imageFile
+    ) {
+        OccurrenceRequestDTO request = new OccurrenceRequestDTO(area, description, occurrenceRegistrantId, imageFile);
+        occurrenceUseCases.createOccurrence(request);
+        return ResponseEntity.ok("response");
     }
 
     @GetMapping("/all")
