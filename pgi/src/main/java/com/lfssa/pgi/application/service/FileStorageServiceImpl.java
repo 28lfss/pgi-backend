@@ -4,11 +4,13 @@ import com.lfssa.pgi.application.usecases.FileStorageUseCases;
 import com.lfssa.pgi.infrastructure.config.exceptions.StorageException;
 import com.lfssa.pgi.infrastructure.config.filestorage.FileStorageProperties;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +19,6 @@ import java.nio.file.Paths;
 public class FileStorageServiceImpl implements FileStorageUseCases {
     private final Path rootLocation;
 
-    @Autowired
     public FileStorageServiceImpl(FileStorageProperties properties) {
         if (properties.getLocation().trim().isEmpty()) {
             throw new StorageException("File upload location can not be Empty.");
@@ -64,6 +65,20 @@ public class FileStorageServiceImpl implements FileStorageUseCases {
             return newFilename;
         } catch (IOException e) {
             throw new StorageException("Store exception", e);
+        }
+    }
+
+    @Override
+    public Resource getByPath(String filename) {
+        try {
+            Path file = rootLocation.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else throw new StorageException("Could not find this file");
+        } catch (MalformedURLException e) {
+            throw new StorageException("Could not read file: " + filename, e);
         }
     }
 }
