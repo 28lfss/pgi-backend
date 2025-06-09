@@ -68,7 +68,6 @@ public class FileStorageServiceImpl implements FileStorageUseCases {
         }
     }
 
-    @Override
     public Resource getByPath(String filename) {
         try {
             Path file = rootLocation.resolve(filename);
